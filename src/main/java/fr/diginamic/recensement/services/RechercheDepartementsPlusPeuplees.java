@@ -10,6 +10,7 @@ import java.util.Scanner;
 import fr.diginamic.recensement.entites.Departement;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
+import fr.diginamic.recensement.mesexceptions.AppExepts;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 
 /**
@@ -29,7 +30,8 @@ public class RechercheDepartementsPlusPeuplees extends MenuService {
 
 		List<Ville> villes = recensement.getVilles();
 		Map<String, Departement> mapDepts = new HashMap<>();
-
+		// Tester le choix département
+				
 		for (Ville ville : villes) {
 
 			Departement departement = mapDepts.get(ville.getCodeDepartement());

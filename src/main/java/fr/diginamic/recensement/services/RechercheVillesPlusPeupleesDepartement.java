@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
+import fr.diginamic.recensement.mesexceptions.AppExepts;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 
 /**
@@ -19,10 +20,13 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheVillesPlusPeupleesDepartement extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws AppExepts {
 
 		System.out.println("Veuillez saisir un numéro de département:");
 		String nomDept = scanner.nextLine();
+
+		// Tester le choix département
+		boolean exist = false;		
 
 		System.out.println("Veuillez saisir un nombre de villes:");
 		String nbVillesStr = scanner.nextLine();
@@ -34,9 +38,13 @@ public class RechercheVillesPlusPeupleesDepartement extends MenuService {
 		for (Ville ville : villes) {
 			if (ville.getCodeDepartement().equalsIgnoreCase(nomDept)) {
 				villesDept.add(ville);
+				exist = true;
 			}
 		}
-
+		if (!exist) {
+			throw new AppExepts(nomDept + " veuillez saisir un département valide.");
+		} 
+		
 		Collections.sort(villesDept, new EnsemblePopComparateur(false));
 
 		if (villesDept.size() > 0) {

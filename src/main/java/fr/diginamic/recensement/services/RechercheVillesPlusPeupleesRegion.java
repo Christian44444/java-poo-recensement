@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
+import fr.diginamic.recensement.mesexceptions.AppExepts;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 
 /**
@@ -19,10 +20,12 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheVillesPlusPeupleesRegion extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws AppExepts {
 
 		System.out.println("Veuillez saisir un nom de région:");
 		String nomRegion = scanner.nextLine();
+		// Tester le choix département
+		boolean exist = false;		
 
 		System.out.println("Veuillez saisir un nombre de villes:");
 		String nbVillesStr = scanner.nextLine();
@@ -34,8 +37,12 @@ public class RechercheVillesPlusPeupleesRegion extends MenuService {
 		for (Ville ville : villes) {
 			if (ville.getNomRegion().toLowerCase().startsWith(nomRegion.toLowerCase())) {
 				villesRegions.add(ville);
+				exist = true;
 			}
 		}
+		if (!exist) {
+			throw new AppExepts(nomRegion + " veuillez saisir une région valide.");
+		} 
 
 		Collections.sort(villesRegions, new EnsemblePopComparateur(false));
 		System.out.println("Les " + nbVilles + " villes les plus peuplées de la région " + nomRegion + " sont :");
