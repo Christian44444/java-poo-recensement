@@ -64,9 +64,9 @@ public class RecherchePopulationBorneService extends MenuService {
 		List<Ville> villes = rec.getVilles();
 		for (Ville ville : villes) {
 			if (ville.getCodeDepartement().equalsIgnoreCase(choix)) {
+				exist = true;
 				if (ville.getPopulation() >= min && ville.getPopulation() <= max) {
 					System.out.println(ville);
-					exist = true;
 				}
 			}
 		}
